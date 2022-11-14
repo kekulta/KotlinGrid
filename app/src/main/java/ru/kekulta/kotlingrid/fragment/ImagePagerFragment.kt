@@ -1,4 +1,4 @@
-package ru.kekulta.kotlingrid
+package ru.kekulta.kotlingrid.fragment
 
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -9,25 +9,26 @@ import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
+import ru.kekulta.kotlingrid.MainActivity
+import ru.kekulta.kotlingrid.R
+import ru.kekulta.kotlingrid.adapter.ImagePagerAdapter
 
 
+/**
+ * A fragment for displaying a pager of images.
+ */
 class ImagePagerFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        println("ImagePagerFragment is creating")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        println("ImagePagerFragment view is creating")
         viewPager = inflater.inflate(R.layout.fragment_pager, container, false) as ViewPager
         viewPager.adapter = ImagePagerAdapter(this)
+        // Set the current position and add a listener that will update the selection coordinator when
+        // paging the images.
         viewPager.currentItem = MainActivity.currentPosition
         viewPager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
@@ -37,14 +38,15 @@ class ImagePagerFragment : Fragment() {
 
         prepareSharedElementTransition()
 
-        if(savedInstanceState == null) postponeEnterTransition()
-
-
-
+        // Avoid a postponeEnterTransition on orientation change, and postpone only of first creation.
+        if (savedInstanceState == null) postponeEnterTransition()
 
         return viewPager
     }
 
+    /**
+     * Prepares the shared element transition from and back to the grid fragment.
+     */
     private fun prepareSharedElementTransition() {
         val transition = TransitionInflater.from(context)
             .inflateTransition(R.transition.image_shared_element_transition)
@@ -70,10 +72,5 @@ class ImagePagerFragment : Fragment() {
                     sharedElements[names[0]] = view.findViewById(R.id.image)
                 }
             })
-
     }
-
-
-
-
 }

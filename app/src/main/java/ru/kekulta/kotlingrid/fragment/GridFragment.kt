@@ -1,4 +1,4 @@
-package ru.kekulta.kotlingrid
+package ru.kekulta.kotlingrid.fragment
 
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -9,8 +9,13 @@ import android.view.ViewGroup
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import ru.kekulta.kotlingrid.adapter.GridAdapter
+import ru.kekulta.kotlingrid.MainActivity
+import ru.kekulta.kotlingrid.R
 
-
+/**
+ * A fragment for displaying a grid of images.
+ */
 class GridFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
@@ -20,7 +25,7 @@ class GridFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         recyclerView = inflater.inflate(R.layout.fragment_grid, container, false) as RecyclerView
         recyclerView.adapter = GridAdapter(this)
 
@@ -36,6 +41,11 @@ class GridFragment : Fragment() {
         scrollToPosition()
     }
 
+
+    /**
+     * Scrolls the recycler view to show the last viewed item in the grid. This is important when
+     * navigating back from the grid.
+     */
     private fun scrollToPosition() {
         recyclerView.addOnLayoutChangeListener(object : OnLayoutChangeListener {
             override fun onLayoutChange(
@@ -64,6 +74,11 @@ class GridFragment : Fragment() {
         })
     }
 
+
+    /**
+     * Prepares the shared element transition to the pager fragment, as well as the other transitions
+     * that affect the flow.
+     */
     private fun prepareTransitions() {
         exitTransition = TransitionInflater.from(context)
             .inflateTransition(R.transition.grid_exit_transition)

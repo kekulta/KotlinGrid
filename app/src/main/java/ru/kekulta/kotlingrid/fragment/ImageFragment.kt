@@ -1,4 +1,4 @@
-package ru.kekulta.kotlingrid
+package ru.kekulta.kotlingrid.fragment
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -12,12 +12,16 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import ru.kekulta.kotlingrid.R
 
+
+/**
+ * A fragment for displaying an image.
+ */
 class ImageFragment : Fragment() {
     companion object {
 
         private const val KEY_IMAGE_RES = "com.google.samples.gridtopager.key.imageRes"
-
 
         fun newInstance(drawableRes: Int): ImageFragment {
             val fragment = ImageFragment()
@@ -26,8 +30,6 @@ class ImageFragment : Fragment() {
             fragment.arguments = argument
             return fragment
         }
-
-
     }
 
     override fun onCreateView(
