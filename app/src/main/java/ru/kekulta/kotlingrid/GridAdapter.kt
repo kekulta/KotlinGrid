@@ -81,7 +81,7 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
 
 
 
-            fragment.childFragmentManager.commit {
+            fragment.parentFragmentManager.commit {
                 setReorderingAllowed(true)
                 addSharedElement(transitioningView, transitioningView.transitionName)
                 replace(
